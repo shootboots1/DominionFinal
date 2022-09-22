@@ -93,6 +93,8 @@ MonoBehaviour:
   isRed: 0
   cell: {fileID: 8287414099932949872}
   dismantledCell: {fileID: 7383163910582994530, guid: 285f9306bc3eb804b9d1e6319df85959, type: 3}
+  redEffect: {fileID: 7668197174214184703, guid: 905209443f7d080449903a36ae52d657, type: 3}
+  greenEffect: {fileID: 1070738483568456647, guid: 1e387871de1c386489c84f5887987eaf, type: 3}
   enlargeAmount: 0.5
   rushForce: 20
   cellRushForce: 40
