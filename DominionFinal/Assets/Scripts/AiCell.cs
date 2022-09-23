@@ -18,6 +18,7 @@ public class AiCell : MonoBehaviour
 
     [Header("Dismantle")]
     public GameObject dismantledCell;
+    public GameObject redEffect, greenEffect;
 
     [Header("Enlarge")]
     public float enlargeAmount;
@@ -49,7 +50,7 @@ public class AiCell : MonoBehaviour
             }
             else if(Random.Range(1.0f, 2.5f) <= 1.5f)
             {
-                dismantle();
+                StartCoroutine(dismantle());
             }
             else if(Random.Range(1, 3) == 1)
             {
@@ -73,12 +74,23 @@ public class AiCell : MonoBehaviour
         Instantiate(cell, transform.position, transform.rotation);
     }
 
-    void dismantle()
+    IEnumerator dismantle()
     {
+        if (isRed)
+        {
+            GameObject effect = Instantiate(redEffect, transform.position, Quaternion.Euler(0, 180, 0));
+            Destroy(effect, 2f);
+        }
+        else
+        {
+            GameObject effect = Instantiate(greenEffect, transform.position, Quaternion.Euler(0, 180, 0));
+            Destroy(effect, 2f);
+        }
         for (int i = 0; i < 5; i++)
         {
             GameObject deadCell = Instantiate(dismantledCell, transform.position + new Vector3(Random.Range(0.05f, 0.1f), Random.Range(0.05f, 0.1f), 0), transform.rotation);
             deadCell.transform.localScale = new Vector3(transform.localScale.x / 2.5f, transform.localScale.y / 2.5f, transform.localScale.z / 2.5f);
+            yield return new WaitForSeconds(0.07f);
         }
         Destroy(gameObject);
     }
