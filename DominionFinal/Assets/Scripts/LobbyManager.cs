@@ -24,6 +24,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public playerItem playerItemPrefab;
     public Transform playerItemParent;
 
+    public GameObject playButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,14 +36,21 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-
+        if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount >= 2)
+        {
+            playButton.SetActive(true);
+        }
+        else
+        {
+            playButton.SetActive(false);
+        }
     }
 
     public void onClickCreate()
     {
         if(roomInputField.text.Length >= 1)
         {
-            PhotonNetwork.CreateRoom(roomInputField.text);
+            PhotonNetwork.CreateRoom(roomInputField.text, new RoomOptions() { MaxPlayers=2});
         }
     }
 
@@ -120,6 +129,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
         {
             playerItem newPlayerItem = Instantiate(playerItemPrefab, playerItemParent);
+            newPlayerItem.setPlayerInfo(player.Value);
             playerItemsList.Add(newPlayerItem);
         }
     }
@@ -132,5 +142,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         updatePlayerList();
+    }
+
+    public void onClickPlay()
+    {
+        PhotonNetwork.LoadLevel("Game");
     }
 }
