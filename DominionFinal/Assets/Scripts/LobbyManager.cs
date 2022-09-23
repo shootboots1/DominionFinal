@@ -15,11 +15,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public Transform content;
     public roomItem roomItemPrefab;
-    public List<RoomInfo> roomInfoList = new List<RoomInfo>();
     public List<roomItem> roomItemsList = new List<roomItem>();
 
     public float timeBetweenUpdates = 1.5f;
     float nextUpdateTime;
+
+    public List<playerItem> playerItemsList = new List<playerItem>();
+    public playerItem playerItemPrefab;
+    public Transform playerItemParent;
 
     // Start is called before the first frame update
     void Start()
@@ -47,30 +50,37 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         lobbyPanel.SetActive(false);
         roomPanel.SetActive(true);
         roomName.text = "Room Name: " + PhotonNetwork.CurrentRoom.Name;
+
+        updatePlayerList();
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         if(Time.time >= nextUpdateTime)
         {
-            foreach (roomItem item in roomItemsList)
-            {
-                Destroy(item.gameObject);
-            }
-            roomItemsList.Clear();
-
-            foreach (RoomInfo room in roomList)
-            {
-                roomItem newRoom = Instantiate(roomItemPrefab, content);
-                newRoom.transform.parent = content;
-                newRoom.transform.localScale = new Vector3(0.736f, 0.598f, 0.736f);
-                newRoom.setRoomName(room.Name);
-                roomItemsList.Add(newRoom);
-            }
-
+            UpdateRoomList(roomList);
             nextUpdateTime = Time.time + timeBetweenUpdates;
         }
         
+    }
+
+    public void UpdateRoomList(List<RoomInfo> list)
+    {
+        foreach (roomItem item in roomItemsList)
+        {
+            Destroy(item.gameObject);
+        }
+        roomItemsList.Clear();
+
+        foreach (RoomInfo room in list)
+        {
+            roomItem newRoom = Instantiate(roomItemPrefab, content);
+            newRoom.transform.parent = content;
+            newRoom.transform.localScale = new Vector3(0.736f, 0.598f, 0.736f);
+            newRoom.setRoomName(room.Name);
+            roomItemsList.Add(newRoom);
+        }
+
     }
 
     public override void OnLeftRoom()
@@ -92,5 +102,35 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();
+    }
+
+    void updatePlayerList()
+    {
+        foreach (playerItem item in playerItemsList)
+        {
+            Destroy(item.gameObject);
+        }
+        playerItemsList.Clear();
+
+        if (PhotonNetwork.CurrentRoom == null)
+        {
+            return;
+        }
+
+        foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            playerItem newPlayerItem = Instantiate(playerItemPrefab, playerItemParent);
+            playerItemsList.Add(newPlayerItem);
+        }
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        updatePlayerList();
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        updatePlayerList();
     }
 }
