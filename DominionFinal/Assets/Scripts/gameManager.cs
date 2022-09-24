@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class gameManager : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class gameManager : MonoBehaviour
     public float currentTime;
     public float thresholdTime;
 
+    public float manaAmount;
+    public float maxManaAmount;
+
+    public TextMeshProUGUI manaText;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +24,12 @@ public class gameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(manaAmount <= maxManaAmount)
+        {
+            manaAmount += Time.deltaTime * 1.5f;
+        }
+        manaText.text = manaAmount.ToString("0");
+
         if (currentTime >= thresholdTime)
         {
             redCells = GameObject.FindGameObjectsWithTag("redCell");

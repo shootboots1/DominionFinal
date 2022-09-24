@@ -129,6 +129,11 @@ MonoBehaviour:
   aManager: {fileID: 0}
   gManager: {fileID: 0}
   spr: {fileID: 5085702688120691811}
+  duplicateCost: 3
+  dismantleCost: 2
+  enlargeCost: 4
+  rushCost: 0
+  cellRushCost: 10
   cellDuplicate: {fileID: 5085702687690111260, guid: 60cc60c646f737141b40687a0b14eb46, type: 3}
   deadCell: {fileID: 5085702687690111260, guid: 467265d50da4d2442bf0b15985375904, type: 3}
   dismantleEffect: {fileID: 1070738483568456647, guid: 1e387871de1c386489c84f5887987eaf, type: 3}
