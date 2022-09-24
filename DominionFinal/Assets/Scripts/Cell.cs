@@ -7,6 +7,7 @@ public class Cell : MonoBehaviour
 {
     public PhotonView view;
     public abilityManager aManager;
+    public gameManager gManager;
     public SpriteRenderer spr;
 
     [Header("Duplicate")]
@@ -29,6 +30,7 @@ public class Cell : MonoBehaviour
     void Start()
     {
         aManager = GameObject.FindGameObjectWithTag("abilityManager").GetComponent<abilityManager>();
+        gManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<gameManager>();
     }
 
     // Update is called once per frame
@@ -108,10 +110,12 @@ public class Cell : MonoBehaviour
     IEnumerator dismantle()
     {
         GameObject dismantleEff = PhotonNetwork.Instantiate(dismantleEffect.name, transform.position, Quaternion.identity);
+        dismantleEff.transform.rotation =  Quaternion.Euler(0, -180, 0);
+        Destroy(dismantleEff, 5f);
         for (int i = 0; i < 5; i++)
         {
-            GameObject deadCellInstance = PhotonNetwork.Instantiate(deadCell.name, transform.position + new Vector3(Random.Range(0.01f, 0.1f), Random.Range(0.01f, 1.0f), 0), transform.rotation);
-            deadCell.transform.localScale = new Vector3(transform.localScale.x / 2.5f, transform.localScale.y / 2.5f, transform.localScale.z / 2.5f);
+            GameObject deadCellInstance = PhotonNetwork.Instantiate(deadCell.name, transform.position, transform.rotation);
+            deadCellInstance.transform.localScale = new Vector3(transform.localScale.x / 2.5f, transform.localScale.y / 2.5f, transform.localScale.z / 2.5f);
             yield return new WaitForSeconds(0.1f);
         }
         PhotonNetwork.Destroy(gameObject);
@@ -126,17 +130,30 @@ public class Cell : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            rb.AddForce(Vector2.left * rushForce);
+            rb.AddForce(Vector2.right * rushForce);
         }
         else
         {
-            rb.AddForce(Vector2.right * rushForce);
+            rb.AddForce(Vector2.left * rushForce);
         }
     }
 
     void cellRush()
     {
-
+        if (PhotonNetwork.IsMasterClient)
+        {
+            foreach (GameObject cell in gManager.redCells)
+            {
+                cell.GetComponent<Rigidbody2D>().AddForce(Vector2.right * rushForce);
+            }
+        }
+        else
+        {
+            foreach (GameObject cell in gManager.greenCells)
+            {
+                cell.GetComponent<Rigidbody2D>().AddForce(Vector2.left * rushForce);
+            }
+        }
     }
 
 }

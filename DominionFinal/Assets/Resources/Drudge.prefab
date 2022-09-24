@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 6411690183558983841}
   - component: {fileID: 7178540876088539864}
   - component: {fileID: -120275411593570753}
-  - component: {fileID: 2384803749193318975}
   - component: {fileID: 463688234}
+  - component: {fileID: 1646909461192047973}
   m_Layer: 0
   m_Name: Drudge
   m_TagString: greenCell
@@ -88,7 +88,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 2384803749193318975}
+  - {fileID: 1646909461192047973}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -113,22 +113,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2384803749193318975
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5085702687690111260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 1
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 1
 --- !u!114 &463688234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,14 +127,66 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   view: {fileID: 7178540876088539864}
   aManager: {fileID: 0}
+  gManager: {fileID: 0}
   spr: {fileID: 5085702688120691811}
   cellDuplicate: {fileID: 5085702687690111260, guid: f63cae19ded69e646902b4d96be7d547, type: 3}
-  deadCell: {fileID: 0}
+  deadCell: {fileID: 5085702687690111260, guid: 467265d50da4d2442bf0b15985375904, type: 3}
   dismantleEffect: {fileID: 1070738483568456647, guid: 1e387871de1c386489c84f5887987eaf, type: 3}
-  enlargeAmount: 0
-  rushForce: 0
-  cellRushForce: 0
+  enlargeAmount: 0.5
+  rushForce: 600
+  cellRushForce: 900
   rb: {fileID: -120275411593570753}
+--- !u!114 &1646909461192047973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5085702687690111260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8069ffa6ab7df7340ad5ce0c3da47526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interpolationBackTime: 0.12
+  extrapolationMode: 2
+  useExtrapolationTimeLimit: 1
+  extrapolationTimeLimit: 5
+  useExtrapolationDistanceLimit: 0
+  extrapolationDistanceLimit: 20
+  sendPositionThreshold: 0
+  sendRotationThreshold: 0
+  sendScaleThreshold: 0
+  sendVelocityThreshold: 0
+  sendAngularVelocityThreshold: 0
+  receivedPositionThreshold: 0
+  receivedRotationThreshold: 0
+  snapPositionThreshold: 0
+  snapRotationThreshold: 0
+  snapScaleThreshold: 0
+  positionLerpSpeed: 0.85
+  rotationLerpSpeed: 0.85
+  scaleLerpSpeed: 0.85
+  timeCorrectionSpeed: 0.1
+  snapTimeThreshold: 0.3
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 1
+  syncVelocity: 1
+  syncAngularVelocity: 1
+  isPositionCompressed: 0
+  isRotationCompressed: 0
+  isScaleCompressed: 0
+  isVelocityCompressed: 0
+  isAngularVelocityCompressed: 0
+  automaticallyResetTime: 1
+  isSmoothingAuthorityChanges: 0
+  whenToUpdateTransform: 1
+  setVelocityInsteadOfPositionOnNonOwners: 0
+  useLocalTransformOnly: 0
+  maxPositionDifferenceForVelocitySyncing: 10
+  ownerChangeIndicator: 1
+  receivedStatesCounter: 0
 --- !u!1 &5085702687735654513
 GameObject:
   m_ObjectHideFlags: 0

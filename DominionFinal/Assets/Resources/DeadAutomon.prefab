@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: aaaf5d3462a3a9f4a8a28c81dd3de168, type: 3}
-  m_Color: {r: 0.59607846, g: 0.15686275, b: 0.21960786, a: 1}
+  m_Color: {r: 0.2830189, g: 0.07342472, b: 0.103366725, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -98,10 +98,9 @@ GameObject:
   - component: {fileID: 5062770173521483574}
   - component: {fileID: 4009443257920249523}
   - component: {fileID: -5862058437025504753}
-  - component: {fileID: 1217353806}
-  - component: {fileID: 6308029389137505840}
+  - component: {fileID: -2409489877400784786}
   m_Layer: 0
-  m_Name: Automon
+  m_Name: DeadAutomon
   m_TagString: redCell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,7 +115,7 @@ Transform:
   m_GameObject: {fileID: 2800915325888430798}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2800915325884220456}
@@ -173,7 +172,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 6308029389137505840}
+  - {fileID: -2409489877400784786}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -198,30 +197,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1217353806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2800915325888430798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b495a63d827ced41b6ddfe84aac290f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  view: {fileID: 4009443257920249523}
-  aManager: {fileID: 0}
-  gManager: {fileID: 0}
-  spr: {fileID: 2800915325884220471}
-  cellDuplicate: {fileID: 2800915325888430798, guid: 97eb5fe0cf717084896927592f8a4e6c, type: 3}
-  deadCell: {fileID: 2800915325888430798, guid: 346b1d7997bb6aa47aacbc5f9e75d549, type: 3}
-  dismantleEffect: {fileID: 7668197174214184703, guid: 905209443f7d080449903a36ae52d657, type: 3}
-  enlargeAmount: 0.5
-  rushForce: 600
-  cellRushForce: 900
-  rb: {fileID: -5862058437025504753}
---- !u!114 &6308029389137505840
+--- !u!114 &-2409489877400784786
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
