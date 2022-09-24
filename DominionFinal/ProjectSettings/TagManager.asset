@@ -6,6 +6,7 @@ TagManager:
   tags:
   - redCell
   - greenCell
+  - abilityManager
   layers:
   - Default
   - TransparentFX
