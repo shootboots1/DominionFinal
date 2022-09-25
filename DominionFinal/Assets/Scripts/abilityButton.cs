@@ -17,10 +17,12 @@ public class abilityButton : MonoBehaviour
 
     public ButtonAbility buttonAbility;
 
+    public GameObject description;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        description.SetActive(false);
     }
 
     // Update is called once per frame

@@ -40,13 +40,14 @@ public class Cell : MonoBehaviour
     {
         aManager = GameObject.FindGameObjectWithTag("abilityManager").GetComponent<abilityManager>();
         gManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<gameManager>();
+        view.OwnershipTransfer = OwnershipOption.Takeover;
         if (isMaster)
         {
-            view.TransferOwnership(PhotonNetwork.MasterClient);
+            view.TransferOwnership(PhotonNetwork.CurrentRoom.Players[1]);
         }
-        else
+        else if (!isMaster)
         {
-            view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
+            view.TransferOwnership(PhotonNetwork.CurrentRoom.Players[2]);
         }
     }
 
@@ -123,6 +124,9 @@ public class Cell : MonoBehaviour
     {
         if(gManager.manaAmount >= duplicateCost)
         {
+            Debug.Log("duplicate");
+
+
             PhotonNetwork.Instantiate(cellDuplicate.name, transform.position, transform.rotation);
             gManager.manaAmount -= duplicateCost;
         }

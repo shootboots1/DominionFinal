@@ -36,6 +36,8 @@ public class consumption : MonoBehaviour
                 }
                 else if(transform.localScale.x == collision.transform.localScale.x)
                 {
+                    GameObject effect = Instantiate(Redeffect, transform.position, Quaternion.identity);
+                    Destroy(effect, 2);
                     Destroy(gameObject);
                 }
             }
@@ -53,6 +55,8 @@ public class consumption : MonoBehaviour
                 }
                 else if (transform.localScale.x == collision.transform.localScale.x)
                 {
+                    GameObject effect = Instantiate(Greeneffect, transform.position, Quaternion.identity);
+                    Destroy(effect, 2);
                     Destroy(gameObject);
                 }
             }

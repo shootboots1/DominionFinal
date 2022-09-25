@@ -129,6 +129,7 @@ MonoBehaviour:
   aManager: {fileID: 0}
   gManager: {fileID: 0}
   spr: {fileID: 5085702688120691811}
+  isMaster: 0
   duplicateCost: 3
   dismantleCost: 2
   enlargeCost: 4

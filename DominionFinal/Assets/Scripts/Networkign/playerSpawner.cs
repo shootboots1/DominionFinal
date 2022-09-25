@@ -11,18 +11,29 @@ public class playerSpawner : MonoBehaviour
     public Camera cam;
     public Transform masterClientCamPos, secondaryClientCamPos;
 
+    public GameObject redSpawner, greenSpawner;
+    public Transform masterBarrelSpawn, secondaryBarrelSpawn;
+
     // Start is called before the first frame update
     void Start()
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.Instantiate(automon.name, automonSpawn.position, Quaternion.identity);
+            Debug.Log("masterClientSpawnPoint");
+
+            //PhotonNetwork.Instantiate(automon.name, automonSpawn.position, Quaternion.identity);
             cam.transform.position = masterClientCamPos.position;
+            GameObject redSpawnerIns = PhotonNetwork.Instantiate(redSpawner.name, masterBarrelSpawn.position, Quaternion.identity);
+            redSpawnerIns.GetComponent<spawner>().isRed = true;
         }
-        else
+        else if(PhotonNetwork.LocalPlayer == PhotonNetwork.CurrentRoom.Players[2])
         {
+            Debug.Log("playerSpawnerPlay");
+
+            //PhotonNetwork.Instantiate(drudge.name, drudgeSpawn.position, Quaternion.identity);
             cam.transform.position = secondaryClientCamPos.position;
-            PhotonNetwork.Instantiate(drudge.name, drudgeSpawn.position, Quaternion.identity);
+            GameObject greenSpawnerIns = PhotonNetwork.Instantiate(greenSpawner.name, secondaryBarrelSpawn.position, Quaternion.identity);
+            greenSpawnerIns.GetComponent<spawner>().isRed = false;
         }
     }
 

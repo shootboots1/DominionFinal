@@ -85,7 +85,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1646909461192047973}
@@ -129,6 +129,7 @@ MonoBehaviour:
   aManager: {fileID: 0}
   gManager: {fileID: 0}
   spr: {fileID: 5085702688120691811}
+  isMaster: 0
   duplicateCost: 3
   dismantleCost: 2
   enlargeCost: 4

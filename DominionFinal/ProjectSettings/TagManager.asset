@@ -7,6 +7,10 @@ TagManager:
   - redCell
   - greenCell
   - abilityManager
+  - drudgeSpawnPos
+  - drudgeSpawnTarget
+  - automonSpawnPos
+  - automonSpawnTarget
   layers:
   - Default
   - TransparentFX

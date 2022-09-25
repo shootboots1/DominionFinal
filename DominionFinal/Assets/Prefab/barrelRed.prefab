@@ -107,6 +107,7 @@ MonoBehaviour:
   dir: {x: 0, y: 0, z: 0}
   force: 500
   spawnInterval: 3
+  isGame: 0
 --- !u!1 &7075431597964237817
 GameObject:
   m_ObjectHideFlags: 0
