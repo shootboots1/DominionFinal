@@ -35,6 +35,9 @@ public class Cell : MonoBehaviour
 
     public Rigidbody2D rb;
 
+    [Header("King of the Hill")]
+    public GameObject greenZoneEff;
+    public GameObject redZoneEff;
     // Start is called before the first frame update
     void Start()
     {
@@ -54,7 +57,31 @@ public class Cell : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+  
+    }
 
+    public void inZone()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            redZoneEff.SetActive(true);
+        }
+        else
+        {
+            greenZoneEff.SetActive(true);
+        }
+    }
+
+    public void outZone()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            redZoneEff.SetActive(false);
+        }
+        else
+        {
+            greenZoneEff.SetActive(false);
+        }
     }
 
     void OnMouseEnter()
@@ -146,7 +173,7 @@ public class Cell : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
             }
             gManager.manaAmount -= dismantleCost;
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
         
     }

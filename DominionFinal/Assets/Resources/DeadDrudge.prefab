@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5085702687690111248}
   - component: {fileID: 5085702687690111251}
-  - component: {fileID: 6411690183558983841}
   - component: {fileID: 7178540876088539864}
   - component: {fileID: -120275411593570753}
-  - component: {fileID: 2106274753942725517}
+  - component: {fileID: -1789088228361196332}
+  - component: {fileID: 152167109755745701}
   m_Layer: 0
   m_Name: DeadDrudge
   m_TagString: greenCell
@@ -53,21 +53,6 @@ CapsuleCollider2D:
   m_Offset: {x: -4.851586e-10, y: -0.0040698056}
   m_Size: {x: 0.74068916, y: 0.4193584}
   m_Direction: 1
---- !u!114 &6411690183558983841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5085702687690111260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6862f8ab30b7cfe4fa88a62ec9025476, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isRed: 0
-  Redeffect: {fileID: 6454886899639590880, guid: 80667c631014fc44b8a40903ae213ab7, type: 3}
-  Greeneffect: {fileID: 6454886899639590880, guid: 95a46e87cfeaa7146abab2963b0ec1b7, type: 3}
 --- !u!114 &7178540876088539864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,7 +72,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 2106274753942725517}
+  - {fileID: 152167109755745701}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -112,7 +97,26 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2106274753942725517
+--- !u!114 &-1789088228361196332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5085702687690111260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6862f8ab30b7cfe4fa88a62ec9025476, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isRed: 0
+  Redeffect: {fileID: 6454886899639590880, guid: 80667c631014fc44b8a40903ae213ab7, type: 3}
+  Greeneffect: {fileID: 6454886899639590880, guid: 95a46e87cfeaa7146abab2963b0ec1b7, type: 3}
+  king: {fileID: 0}
+  view: {fileID: 0}
+  thresholdTime: 0.1
+  currentTime: 0
+--- !u!114 &152167109755745701
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -157,7 +161,7 @@ MonoBehaviour:
   isAngularVelocityCompressed: 0
   automaticallyResetTime: 1
   isSmoothingAuthorityChanges: 0
-  whenToUpdateTransform: 1
+  whenToUpdateTransform: 0
   setVelocityInsteadOfPositionOnNonOwners: 0
   useLocalTransformOnly: 0
   maxPositionDifferenceForVelocitySyncing: 10

@@ -11,6 +11,7 @@ TagManager:
   - drudgeSpawnTarget
   - automonSpawnPos
   - automonSpawnTarget
+  - kingOfTheHill
   layers:
   - Default
   - TransparentFX

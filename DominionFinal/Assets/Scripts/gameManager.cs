@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class gameManager : MonoBehaviour
 {
@@ -35,6 +36,16 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI gracePeriodNumber;
 
     public static bool redWin;
+
+    public int redCellCount;
+    public int greenCellCount;
+
+    [Header("King of the hill")]
+    public kingOfTheHill hillKing;
+    public float kingOfTheHillWinTime;
+
+    public Slider redZoneSlider;
+    public Slider greenZoneSlider;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,17 +54,31 @@ public class gameManager : MonoBehaviour
         manaSlider.minValue = 0;
         manaSlider.maxValue = maxManaAmount;
         cellAmountSlider.minValue = 0;
+
+        redZoneSlider.minValue = 0;
+        redZoneSlider.maxValue = kingOfTheHillWinTime;
+        greenZoneSlider.minValue = 0;
+        greenZoneSlider.maxValue = kingOfTheHillWinTime;
     }
 
     // Update is called once per frame
     void Update()
     {
-        cellAmountSlider.maxValue = cellAmount;
-        cellAmount = greenCells.Length + redCells.Length;
-        cellAmountSlider.value = redCells.Length;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GetComponent<PhotonView>().RPC("updateRedZoneSlider", RpcTarget.All, hillKing.redZoneTime);
+        }
+        else
+        {
+            GetComponent<PhotonView>().RPC("updateGreenZoneSlider", RpcTarget.All, hillKing.greenZoneTime);
+        }
 
-        redCellCountText.text = redCells.Length.ToString();
-        greenCellCountText.text = greenCells.Length.ToString();
+        cellAmountSlider.maxValue = cellAmount;
+        cellAmount = redCellCount + greenCellCount;
+        cellAmountSlider.value = redCellCount;
+
+        redCellCountText.text = redCellCount.ToString();
+        greenCellCountText.text = greenCellCount.ToString();
 
         manaSlider.value = manaAmount;
         if(manaAmount <= maxManaAmount)
@@ -64,7 +89,19 @@ public class gameManager : MonoBehaviour
 
         if (currentTime >= thresholdTime)
         {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                GetComponent<PhotonView>().RPC("updateRedCellCount", RpcTarget.All, GameObject.FindGameObjectsWithTag("redCell").Length);
+            }
+            else
+            {
+                GetComponent<PhotonView>().RPC("updateGreenCellCount", RpcTarget.All, GameObject.FindGameObjectsWithTag("greenCell").Length);
+            }
+
+            //redCellCount = redCells.Length;
             redCells = GameObject.FindGameObjectsWithTag("redCell");
+            //greenCellCount = greenCells.Length;
+
             greenCells = GameObject.FindGameObjectsWithTag("greenCell");
             currentTime = 0;
         }
@@ -75,19 +112,33 @@ public class gameManager : MonoBehaviour
 
         if(!isGrace)
         {
-            if(redCells.Length >= (cellAmount * 0.9f))
+            if(redCellCount >= (cellAmount * 0.9f))
             {
                 //win
                 Debug.Log("RED CELLS WIN!!!");
                 redWin = true;
                 SceneManager.LoadScene("winScreen");
             }
-            if(greenCells.Length >= (cellAmount * 0.9f))
+            if(greenCellCount >= (cellAmount * 0.9f))
             {
                 redWin = false;
                 Debug.Log("GREEN CELLS WIN!!!");
                 SceneManager.LoadScene("winScreen");
             }
+        }
+
+
+        if(hillKing.redZoneTime >= kingOfTheHillWinTime)
+        {
+            Debug.Log("RED CELLS WIN!!!");
+            redWin = true;
+            SceneManager.LoadScene("winScreen");
+        }
+        if(hillKing.greenZoneTime >= kingOfTheHillWinTime)
+        {
+            redWin = false;
+            Debug.Log("GREEN CELLS WIN!!!");
+            SceneManager.LoadScene("winScreen");
         }
     }
 
@@ -110,5 +161,29 @@ public class gameManager : MonoBehaviour
         gracePeriodText.text = "Grace period over!";
         yield return new WaitForSeconds(3);
         Destroy(gracePeriodText.gameObject);
+    }
+
+    [PunRPC]
+    void updateRedCellCount(int count)
+    {
+        redCellCount = count;
+    }
+
+    [PunRPC]
+    void updateGreenCellCount(int count)
+    {
+        greenCellCount = count;
+    }
+
+    [PunRPC]
+    void updateRedZoneSlider(float value)
+    {
+        redZoneSlider.value = value;
+    }
+
+    [PunRPC]
+    void updateGreenZoneSlider(float value)
+    {
+        greenZoneSlider.value = value;
     }
 }

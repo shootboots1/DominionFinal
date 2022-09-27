@@ -48,8 +48,6 @@ MonoBehaviour:
   redCell: {fileID: 2800915325888430798, guid: 66cbac1726a28874d86ae773a64d02f4, type: 3}
   greenCell: {fileID: 5085702687690111260, guid: 60cc60c646f737141b40687a0b14eb46, type: 3}
   isRed: 0
-  redCellPos: {fileID: 0}
-  greeCellPos: {fileID: 0}
   redCellTarget: {fileID: 0}
   greenCellTarget: {fileID: 0}
   spawnInterval: 6

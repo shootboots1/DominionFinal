@@ -10,7 +10,6 @@ public class spawner : MonoBehaviour
 
     public bool isRed;
 
-    public GameObject redCellPos, greeCellPos;
     public Transform redCellTarget, greenCellTarget;
 
     private Vector3 dir;
@@ -20,19 +19,16 @@ public class spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        redCellPos = GameObject.FindGameObjectWithTag("automonSpawnPos");
-        greeCellPos = GameObject.FindGameObjectWithTag("drudgeSpawnPos");
         redCellTarget = GameObject.FindGameObjectWithTag("automonSpawnTarget").GetComponent<Transform>();
         greenCellTarget = GameObject.FindGameObjectWithTag("drudgeSpawnTarget").GetComponent<Transform>();
 
         if (isRed)
         {
             StartCoroutine(spawn());
-
         }
         if (!isRed)
         {
-            StartCoroutine(spawnGreen());
+            StartCoroutine(spawnGreen1());
         }
     }
 
@@ -42,35 +38,38 @@ public class spawner : MonoBehaviour
         
     }
 
-    IEnumerator spawnGreen()
+    IEnumerator spawnGreen1()
     {
         if (GetComponent<PhotonView>().IsMine)
         {
-            Debug.Log("spawnGreen");
-
-            GameObject cellInstance = PhotonNetwork.Instantiate(greenCell.name, greeCellPos.transform.position, Quaternion.identity);
+            GameObject cellInstance = PhotonNetwork.Instantiate(greenCell.name, transform.position, Quaternion.identity);
 
             dir = greenCellTarget.transform.position - cellInstance.transform.position;
             dir = dir.normalized;
             cellInstance.GetComponent<Rigidbody2D>().AddForce(dir * spawnForce);
+
             yield return new WaitForSeconds(spawnInterval);
 
-            StartCoroutine(spawnGreen());
+            StartCoroutine(spawnGreen1());
         }
         
     }
 
     IEnumerator spawn()
     {
-        
-        GameObject cellInstance = PhotonNetwork.Instantiate(redCell.name, redCellPos.transform.position, Quaternion.identity);
+        if (GetComponent<PhotonView>().IsMine)
+        {
+            GameObject cellInstance = PhotonNetwork.Instantiate(redCell.name, transform.position, Quaternion.identity);
 
-        dir = redCellTarget.transform.position - cellInstance.transform.position;
-        dir = dir.normalized;
-        cellInstance.GetComponent<Rigidbody2D>().AddForce(dir * spawnForce);
-        yield return new WaitForSeconds(spawnInterval);
+            dir = redCellTarget.transform.position - cellInstance.transform.position;
+            dir = dir.normalized;
+            cellInstance.GetComponent<Rigidbody2D>().AddForce(dir * spawnForce);
 
-        StartCoroutine(spawn());
+            yield return new WaitForSeconds(spawnInterval);
 
+            StartCoroutine(spawn());
+        }
     }
+
+
 }

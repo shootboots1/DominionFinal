@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 5062770173521483574}
   - component: {fileID: 4009443257920249523}
   - component: {fileID: -5862058437025504753}
-  - component: {fileID: -2409489877400784786}
+  - component: {fileID: 1012164007486987576}
   m_Layer: 0
   m_Name: DeadAutomon
   m_TagString: redCell
@@ -153,6 +153,10 @@ MonoBehaviour:
   isRed: 1
   Redeffect: {fileID: 6454886899639590880, guid: 80667c631014fc44b8a40903ae213ab7, type: 3}
   Greeneffect: {fileID: 6454886899639590880, guid: 95a46e87cfeaa7146abab2963b0ec1b7, type: 3}
+  king: {fileID: 0}
+  view: {fileID: 4009443257920249523}
+  thresholdTime: 0
+  currentTime: 0
 --- !u!114 &4009443257920249523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,10 +173,10 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: -2409489877400784786}
+  - {fileID: 1012164007486987576}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -197,7 +201,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-2409489877400784786
+--- !u!114 &1012164007486987576
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -242,7 +246,7 @@ MonoBehaviour:
   isAngularVelocityCompressed: 0
   automaticallyResetTime: 1
   isSmoothingAuthorityChanges: 0
-  whenToUpdateTransform: 1
+  whenToUpdateTransform: 0
   setVelocityInsteadOfPositionOnNonOwners: 0
   useLocalTransformOnly: 0
   maxPositionDifferenceForVelocitySyncing: 10
