@@ -186,8 +186,9 @@ public class Cell : MonoBehaviour
             {
                 GameObject deadCellInstance = PhotonNetwork.Instantiate(deadCell.name, transform.position, transform.rotation);
                 deadCellInstance.transform.localScale = new Vector3(transform.localScale.x / 2.5f, transform.localScale.y / 2.5f, transform.localScale.z / 2.5f);
-                deadCellInstance.GetComponent<Cell>().mass = deadCellInstance.transform.localScale.x;
-
+                float scale = transform.localScale.x / 2.5f;
+                int id = deadCellInstance.gameObject.GetComponent<PhotonView>().ViewID;
+                view.RPC("setScale", RpcTarget.All, id, scale);
                 yield return new WaitForSeconds(0.1f);
             }
             gManager.manaAmount -= dismantleCost;
@@ -226,7 +227,8 @@ public class Cell : MonoBehaviour
             {
                 foreach (GameObject cell in gManager.redCells)
                 {
-                    cell.GetComponent<Rigidbody2D>().AddForce(Vector2.right * rushForce);
+                    Debug.Log(cell.name);
+                    cell.GetComponent<Cell>().rushFunc();
                 }
             }
             else
@@ -239,9 +241,20 @@ public class Cell : MonoBehaviour
         }
     }
 
+    void rushFunc()
+    {
+        gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.right * rushForce);
+    }
+
     [PunRPC]
     void cellScale(float amount)
     {
         mass += amount;
+    }
+
+    [PunRPC]
+    void setScale(int viewID, float scale)
+    {
+        PhotonView.Find(viewID).gameObject.GetComponent<Cell>().mass -= scale;
     }
 }

@@ -64,11 +64,11 @@ public class gameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.LocalPlayer == PhotonNetwork.CurrentRoom.Players[1])
         {
             GetComponent<PhotonView>().RPC("updateRedZoneSlider", RpcTarget.All, hillKing.redZoneTime);
         }
-        else
+        else if (PhotonNetwork.LocalPlayer == PhotonNetwork.CurrentRoom.Players[2])
         {
             GetComponent<PhotonView>().RPC("updateGreenZoneSlider", RpcTarget.All, hillKing.greenZoneTime);
         }

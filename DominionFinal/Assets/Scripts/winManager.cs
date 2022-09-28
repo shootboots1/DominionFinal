@@ -2,13 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Photon.Pun;
+using UnityEngine.SceneManagement;
 
-public class winManager : MonoBehaviour
+public class winManager : MonoBehaviourPunCallbacks
 {
     public TextMeshProUGUI winText;
 
     public string redWins;
     public string greenWins;
+
+    public GameObject automon;
+    public GameObject drudge;
 
     // Start is called before the first frame update
     void Start()
@@ -16,10 +21,14 @@ public class winManager : MonoBehaviour
         if (gameManager.redWin)
         {
             winText.text = redWins;
+            drudge.SetActive(false);
+            automon.SetActive(true);
         }
         if (!gameManager.redWin)
         {
             winText.text = greenWins;
+            drudge.SetActive(true);
+            automon.SetActive(false);
         }
     }
 
@@ -27,5 +36,13 @@ public class winManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void goBackToLobby()
+    {
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.JoinLobby();
+
+        SceneManager.LoadScene("Lobby");
     }
 }

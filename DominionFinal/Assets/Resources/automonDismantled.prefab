@@ -16,8 +16,8 @@ GameObject:
   - component: {fileID: -770110026488264313}
   - component: {fileID: -81065813823807110}
   m_Layer: 0
-  m_Name: DeadDrudge
-  m_TagString: greenCell
+  m_Name: automonDismantled
+  m_TagString: redCell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6862f8ab30b7cfe4fa88a62ec9025476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isRed: 0
+  isRed: 1
   Redeffect: {fileID: 6454886899639590880, guid: 80667c631014fc44b8a40903ae213ab7, type: 3}
   Greeneffect: {fileID: 6454886899639590880, guid: 95a46e87cfeaa7146abab2963b0ec1b7, type: 3}
   king: {fileID: 0}
@@ -186,7 +186,7 @@ MonoBehaviour:
   aManager: {fileID: 0}
   gManager: {fileID: 0}
   spr: {fileID: 0}
-  isMaster: 0
+  isMaster: 1
   duplicateCost: 0
   dismantleCost: 0
   enlargeCost: 0
@@ -198,7 +198,7 @@ MonoBehaviour:
   isDismantle: 1
   enlargeAmount: 0
   mass: 1
-  rushForce: 0
+  rushForce: 600
   cellRushForce: 0
   rb: {fileID: -120275411593570753}
   greenZoneEff: {fileID: 3250654379039138304, guid: 60c79d8d2d5235d4299e08a8b3ad7281, type: 3}
@@ -363,7 +363,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: aaaf5d3462a3a9f4a8a28c81dd3de168, type: 3}
-  m_Color: {r: 0.06341225, g: 0.23584908, b: 0.07888735, a: 1}
+  m_Color: {r: 0.2830189, g: 0.10999332, b: 0.084104665, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

@@ -57,10 +57,8 @@ public class consumption : MonoBehaviour
                     view.RPC("destroy", collision.gameObject.GetComponent<PhotonView>().Owner, id);
 
                 }
-                
-                else if (cellScr.mass == collision.transform.GetComponent<Cell>().mass)
+                else
                 {
-
                     if (king.redCells.Contains(gameObject))
                     {
                         king.redCells.Remove(gameObject);
@@ -68,14 +66,9 @@ public class consumption : MonoBehaviour
 
                     GameObject eff = PhotonNetwork.Instantiate(Redeffect.name, transform.position, Quaternion.identity);
                     Destroy(eff, 2);
-                    GameObject eff1 = PhotonNetwork.Instantiate(Greeneffect.name, collision.transform.position, Quaternion.identity);
-                    Destroy(eff1, 2);
 
-                    int id = collision.gameObject.GetComponent<PhotonView>().ViewID;
-                    cellScr.mass = 0;
-                    collision.transform.GetComponent<Cell>().mass = 0;
-                    view.RPC("destroy", collision.gameObject.GetComponent<PhotonView>().Owner, id);
-                    PhotonNetwork.Destroy(gameObject);
+                    int id = gameObject.GetComponent<PhotonView>().ViewID;
+                    view.RPC("destroy", gameObject.GetComponent<PhotonView>().Owner, id);
                 }
 
             }
@@ -98,7 +91,17 @@ public class consumption : MonoBehaviour
 
                     int id = collision.gameObject.GetComponent<PhotonView>().ViewID;
                     view.RPC("destroy", collision.gameObject.GetComponent<PhotonView>().Owner, id);
-
+                }
+                else
+                {
+                    if (king.greenCells.Contains(gameObject))
+                    {
+                        king.greenCells.Remove(gameObject);
+                    }
+                    GameObject eff1 = PhotonNetwork.Instantiate(Greeneffect.name, collision.transform.position, Quaternion.identity);
+                    Destroy(eff1, 2);
+                    int id = gameObject.GetComponent<PhotonView>().ViewID;
+                    view.RPC("destroy", gameObject.GetComponent<PhotonView>().Owner, id);
                 }
             }
         }
