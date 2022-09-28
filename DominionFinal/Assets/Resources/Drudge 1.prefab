@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 7178540876088539864}
   - component: {fileID: -120275411593570753}
   - component: {fileID: 463688234}
-  - component: {fileID: 8908228098845119378}
   - component: {fileID: -7593991113797283710}
+  - component: {fileID: 6103889507974041358}
   m_Layer: 0
   m_Name: Drudge 1
   m_TagString: greenCell
@@ -124,31 +124,14 @@ MonoBehaviour:
   cellDuplicate: {fileID: 5085702687690111260, guid: 60cc60c646f737141b40687a0b14eb46, type: 3}
   deadCell: {fileID: 5085702687690111260, guid: 467265d50da4d2442bf0b15985375904, type: 3}
   dismantleEffect: {fileID: 1070738483568456647, guid: 1e387871de1c386489c84f5887987eaf, type: 3}
+  isDismantle: 0
   enlargeAmount: 0.5
+  mass: 0
   rushForce: 600
   cellRushForce: 900
   rb: {fileID: -120275411593570753}
   greenZoneEff: {fileID: 7017067704127021524}
   redZoneEff: {fileID: 3680598273447126738, guid: 1ab9b3dc8fda0f34ba838148b3245b99, type: 3}
---- !u!114 &8908228098845119378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5085702687690111260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6862f8ab30b7cfe4fa88a62ec9025476, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isRed: 0
-  Redeffect: {fileID: 6454886899639590880, guid: 80667c631014fc44b8a40903ae213ab7, type: 3}
-  Greeneffect: {fileID: 6454886899639590880, guid: 95a46e87cfeaa7146abab2963b0ec1b7, type: 3}
-  king: {fileID: 0}
-  view: {fileID: 0}
-  thresholdTime: 0.1
-  currentTime: 0
 --- !u!114 &-7593991113797283710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,7 +166,7 @@ MonoBehaviour:
   timeCorrectionSpeed: 0.1
   snapTimeThreshold: 0.3
   syncPosition: 1
-  syncRotation: 1
+  syncRotation: 6
   syncScale: 1
   syncVelocity: 1
   syncAngularVelocity: 1
@@ -200,6 +183,27 @@ MonoBehaviour:
   maxPositionDifferenceForVelocitySyncing: 10
   ownerChangeIndicator: 1
   receivedStatesCounter: 0
+--- !u!114 &6103889507974041358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5085702687690111260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6862f8ab30b7cfe4fa88a62ec9025476, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isRed: 0
+  Redeffect: {fileID: 6454886899639590880, guid: 80667c631014fc44b8a40903ae213ab7, type: 3}
+  Greeneffect: {fileID: 6454886899639590880, guid: 95a46e87cfeaa7146abab2963b0ec1b7, type: 3}
+  king: {fileID: 0}
+  view: {fileID: 0}
+  thresholdTime: 0
+  currentTime: 0
+  cellScr: {fileID: 463688234}
+  scaleChangeScaler: 0.85
 --- !u!1 &5085702687735654513
 GameObject:
   m_ObjectHideFlags: 0

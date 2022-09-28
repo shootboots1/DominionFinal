@@ -159,6 +159,8 @@ MonoBehaviour:
   view: {fileID: 4009443257920249523}
   thresholdTime: 0.2
   currentTime: 0
+  cellScr: {fileID: 1217353806}
+  scaleChangeScaler: 0.85
 --- !u!114 &4009443257920249523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,7 +230,9 @@ MonoBehaviour:
   cellDuplicate: {fileID: 2800915325888430798, guid: 97eb5fe0cf717084896927592f8a4e6c, type: 3}
   deadCell: {fileID: 2800915325888430798, guid: 346b1d7997bb6aa47aacbc5f9e75d549, type: 3}
   dismantleEffect: {fileID: 7668197174214184703, guid: 905209443f7d080449903a36ae52d657, type: 3}
+  isDismantle: 0
   enlargeAmount: 0.5
+  mass: 0
   rushForce: 600
   cellRushForce: 900
   rb: {fileID: -5862058437025504753}
@@ -268,7 +272,7 @@ MonoBehaviour:
   timeCorrectionSpeed: 0.1
   snapTimeThreshold: 0.3
   syncPosition: 1
-  syncRotation: 1
+  syncRotation: 6
   syncScale: 1
   syncVelocity: 1
   syncAngularVelocity: 1

@@ -16,9 +16,14 @@ public class consumption : MonoBehaviour
 
     public float thresholdTime;
     public float currentTime;
+
+    public Cell cellScr;
+
+    public float scaleChangeScaler = 0.9f;
     // Start is called before the first frame update
     void Start()
     {
+        
         currentTime = 0;
         view = GetComponent<PhotonView>();
         king = GameObject.FindGameObjectWithTag("kingOfTheHill").GetComponent<kingOfTheHill>();
@@ -27,7 +32,7 @@ public class consumption : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentTime += Time.deltaTime;
+
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -36,26 +41,26 @@ public class consumption : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("greenCell"))
             {
-                if(transform.localScale.x > collision.transform.localScale.x)
+                if (cellScr.mass > collision.transform.GetComponent<Cell>().mass)
                 {
-
-                    if(king.greenCells.Contains(collision.gameObject))
+                    if (king.greenCells.Contains(collision.gameObject))
                     {
                         king.greenCells.Remove(collision.gameObject);
                     }
-
-                    transform.localScale -= new Vector3(collision.transform.localScale.x * 0.85f, collision.transform.localScale.y * 0.85f, 0);
-
                     GameObject eff = PhotonNetwork.Instantiate(Greeneffect.name, collision.transform.position, Quaternion.identity);
                     Destroy(eff, 2);
 
-                    int id = collision.gameObject.GetComponent<PhotonView>().ViewID;
+                    int scaleID = gameObject.GetComponent<PhotonView>().ViewID;
+                    view.RPC("scaleChange", RpcTarget.All, collision.transform.GetComponent<Cell>().mass, scaleID);
 
+                    int id = collision.gameObject.GetComponent<PhotonView>().ViewID;
                     view.RPC("destroy", collision.gameObject.GetComponent<PhotonView>().Owner, id);
+
                 }
-                else if (transform.localScale.x == collision.transform.localScale.x)
+                
+                else if (cellScr.mass == collision.transform.GetComponent<Cell>().mass)
                 {
-                    
+
                     if (king.redCells.Contains(gameObject))
                     {
                         king.redCells.Remove(gameObject);
@@ -66,43 +71,43 @@ public class consumption : MonoBehaviour
                     GameObject eff1 = PhotonNetwork.Instantiate(Greeneffect.name, collision.transform.position, Quaternion.identity);
                     Destroy(eff1, 2);
 
-                    Debug.Log("RPC");
-
                     int id = collision.gameObject.GetComponent<PhotonView>().ViewID;
-
+                    cellScr.mass = 0;
+                    collision.transform.GetComponent<Cell>().mass = 0;
                     view.RPC("destroy", collision.gameObject.GetComponent<PhotonView>().Owner, id);
-
                     PhotonNetwork.Destroy(gameObject);
                 }
 
             }
-
         }
         else
         {
             if (collision.gameObject.CompareTag("redCell"))
             {
-                if (transform.localScale.x > collision.transform.localScale.x)
+                if (cellScr.mass > collision.transform.GetComponent<Cell>().mass)
                 {
-
                     if (king.redCells.Contains(collision.gameObject))
                     {
                         king.redCells.Remove(collision.gameObject);
                     }
-
-                    transform.localScale -= new Vector3(collision.transform.localScale.x * 0.85f, collision.transform.localScale.y * 0.85f, 0);
-
                     GameObject eff = PhotonNetwork.Instantiate(Redeffect.name, collision.transform.position, Quaternion.identity);
                     Destroy(eff, 2);
 
-                    int id = collision.gameObject.GetComponent<PhotonView>().ViewID;
+                    int scaleID = gameObject.GetComponent<PhotonView>().ViewID;
+                    view.RPC("scaleChange", RpcTarget.All, collision.transform.GetComponent<Cell>().mass, scaleID);
 
+                    int id = collision.gameObject.GetComponent<PhotonView>().ViewID;
                     view.RPC("destroy", collision.gameObject.GetComponent<PhotonView>().Owner, id);
 
                 }
             }
-
         }
+
+    }
+    [PunRPC]
+    void scaleChange(float scale, int view)
+    {
+        PhotonView.Find(view).gameObject.GetComponent<Cell>().mass -= (scale * scaleChangeScaler);
     }
 
 

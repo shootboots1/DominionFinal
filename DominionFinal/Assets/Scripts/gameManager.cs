@@ -117,12 +117,16 @@ public class gameManager : MonoBehaviour
                 //win
                 Debug.Log("RED CELLS WIN!!!");
                 redWin = true;
+                GetComponent<PhotonView>().RPC("gameWin", RpcTarget.All, true);
+
                 SceneManager.LoadScene("winScreen");
             }
             if(greenCellCount >= (cellAmount * 0.9f))
             {
                 redWin = false;
                 Debug.Log("GREEN CELLS WIN!!!");
+                GetComponent<PhotonView>().RPC("gameWin", RpcTarget.All, false) ;
+
                 SceneManager.LoadScene("winScreen");
             }
         }
@@ -186,4 +190,11 @@ public class gameManager : MonoBehaviour
     {
         greenZoneSlider.value = value;
     }
+
+    [PunRPC]
+    void gameWin(bool redWinIns)
+    {
+        redWin = redWinIns;
+    }
+
 }

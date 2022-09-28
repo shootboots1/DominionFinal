@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 4009443257920249523}
   - component: {fileID: -5862058437025504753}
   - component: {fileID: 1012164007486987576}
+  - component: {fileID: -7640061244161483881}
   m_Layer: 0
   m_Name: DeadAutomon
   m_TagString: redCell
@@ -157,6 +158,8 @@ MonoBehaviour:
   view: {fileID: 4009443257920249523}
   thresholdTime: 0
   currentTime: 0
+  cellScr: {fileID: -7640061244161483881}
+  scaleChangeScaler: 0.85
 --- !u!114 &4009443257920249523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,7 +238,7 @@ MonoBehaviour:
   timeCorrectionSpeed: 0.1
   snapTimeThreshold: 0.3
   syncPosition: 1
-  syncRotation: 1
+  syncRotation: 6
   syncScale: 1
   syncVelocity: 1
   syncAngularVelocity: 1
@@ -252,6 +255,39 @@ MonoBehaviour:
   maxPositionDifferenceForVelocitySyncing: 10
   ownerChangeIndicator: 1
   receivedStatesCounter: 0
+--- !u!114 &-7640061244161483881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2800915325888430798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b495a63d827ced41b6ddfe84aac290f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  view: {fileID: 0}
+  aManager: {fileID: 0}
+  gManager: {fileID: 0}
+  spr: {fileID: 0}
+  isMaster: 0
+  duplicateCost: 0
+  dismantleCost: 0
+  enlargeCost: 0
+  rushCost: 0
+  cellRushCost: 0
+  cellDuplicate: {fileID: 0}
+  deadCell: {fileID: 0}
+  dismantleEffect: {fileID: 0}
+  isDismantle: 1
+  enlargeAmount: 0
+  mass: 0
+  rushForce: 0
+  cellRushForce: 0
+  rb: {fileID: 0}
+  greenZoneEff: {fileID: 3250654379039138304, guid: 60c79d8d2d5235d4299e08a8b3ad7281, type: 3}
+  redZoneEff: {fileID: 3680598273447126738, guid: 1ab9b3dc8fda0f34ba838148b3245b99, type: 3}
 --- !u!1 &2800915326898739515
 GameObject:
   m_ObjectHideFlags: 0

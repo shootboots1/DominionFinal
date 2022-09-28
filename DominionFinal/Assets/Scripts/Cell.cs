@@ -25,9 +25,11 @@ public class Cell : MonoBehaviour
     [Header("Dismantle")]
     public GameObject deadCell;
     public GameObject dismantleEffect;
+    public bool isDismantle = false;
 
     [Header("Enlarge")]
     public float enlargeAmount;
+    public float mass;
 
     [Header("Rush/CellRush")]
     public float rushForce;
@@ -41,6 +43,10 @@ public class Cell : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!isDismantle)
+        {
+            mass = 1;
+        }
         aManager = GameObject.FindGameObjectWithTag("abilityManager").GetComponent<abilityManager>();
         gManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<gameManager>();
         view.OwnershipTransfer = OwnershipOption.Takeover;
@@ -57,7 +63,7 @@ public class Cell : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-  
+        transform.localScale = new Vector3(mass, mass, 0);
     }
 
     public void inZone()
@@ -88,33 +94,39 @@ public class Cell : MonoBehaviour
     {
         if (view.IsMine)
         {
-            Debug.Log("enter");
-            if (PhotonNetwork.IsMasterClient)
+            if (!isDismantle)
             {
-                Debug.Log("masterClient");
 
-                spr.color = (new Color32(111, 30, 30, 255));
-            }
-            else
-            {
-                Debug.Log("SecondaryClient");
+                if (PhotonNetwork.IsMasterClient)
+                {
 
-                spr.color = (new Color32(12, 65, 15, 255));
+                    spr.color = (new Color32(111, 30, 30, 255));
+                }
+                else
+                {
+                    Debug.Log("SecondaryClient");
+
+                    spr.color = (new Color32(12, 65, 15, 255));
+                }
             }
+            
         }
     }
 
     void OnMouseExit()
     {
-        if (view.IsMine)
+        if (!isDismantle)
         {
-            if (PhotonNetwork.IsMasterClient)
+            if (view.IsMine)
             {
-                spr.color = (new Color32(156, 44, 44, 255));
-            }
-            else
-            {
-                spr.color = (new Color32(22, 99, 27, 255));
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    spr.color = (new Color32(156, 44, 44, 255));
+                }
+                else
+                {
+                    spr.color = (new Color32(22, 99, 27, 255));
+                }
             }
         }
     }
@@ -124,26 +136,30 @@ public class Cell : MonoBehaviour
     {
         if (view.IsMine)
         {
-            if (aManager.selectedAbility == SelectedAbility.Duplicate)
+            if (!isDismantle)
             {
-                duplicate();
+                if (aManager.selectedAbility == SelectedAbility.Duplicate)
+                {
+                    duplicate();
+                }
+                if (aManager.selectedAbility == SelectedAbility.Dismantle)
+                {
+                    StartCoroutine(dismantle());
+                }
+                if (aManager.selectedAbility == SelectedAbility.Enlarge)
+                {
+                    enlarge();
+                }
+                if (aManager.selectedAbility == SelectedAbility.Rush)
+                {
+                    rush();
+                }
+                if (aManager.selectedAbility == SelectedAbility.CellRush)
+                {
+                    cellRush();
+                }
             }
-            if (aManager.selectedAbility == SelectedAbility.Dismantle)
-            {
-                StartCoroutine(dismantle());
-            }
-            if (aManager.selectedAbility == SelectedAbility.Enlarge)
-            {
-                enlarge();
-            }
-            if (aManager.selectedAbility == SelectedAbility.Rush)
-            {
-                rush();
-            }
-            if (aManager.selectedAbility == SelectedAbility.CellRush)
-            {
-                cellRush();
-            }
+            
         }    
     }
 
@@ -170,6 +186,8 @@ public class Cell : MonoBehaviour
             {
                 GameObject deadCellInstance = PhotonNetwork.Instantiate(deadCell.name, transform.position, transform.rotation);
                 deadCellInstance.transform.localScale = new Vector3(transform.localScale.x / 2.5f, transform.localScale.y / 2.5f, transform.localScale.z / 2.5f);
+                deadCellInstance.GetComponent<Cell>().mass = deadCellInstance.transform.localScale.x;
+
                 yield return new WaitForSeconds(0.1f);
             }
             gManager.manaAmount -= dismantleCost;
@@ -183,9 +201,7 @@ public class Cell : MonoBehaviour
         if(gManager.manaAmount >= enlargeCost)
         {
             gManager.manaAmount -= enlargeCost;
-            transform.localScale += new Vector3(enlargeAmount, enlargeAmount, enlargeAmount);
-
-
+            view.RPC("cellScale", RpcTarget.All, enlargeAmount);
         }
     }
 
@@ -223,4 +239,9 @@ public class Cell : MonoBehaviour
         }
     }
 
+    [PunRPC]
+    void cellScale(float amount)
+    {
+        mass += amount;
+    }
 }
